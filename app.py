@@ -1,23 +1,15 @@
+
 import streamlit as st
 import numpy as np
 import pandas as pd
 from PIL import Image
 
 # ==========================================
-# PAGE CONFIG
+# LOAD TFLITE MODEL
 # ==========================================
-st.set_page_config(
-    page_title="Smart Waste Classification",
-    page_icon="♻️",
-    layout="wide"
-)
+from ai_edge_litert.interpreter import Interpreter
 
-# ==========================================
-# LOAD MODEL
-# ==========================================
-import tflite_runtime.interpreter as tflite
-
-interpreter = tflite.Interpreter(
+interpreter = Interpreter(
     model_path="waste_model.tflite"
 )
 
