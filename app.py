@@ -79,6 +79,9 @@ trash_map = {
 # ==========================================
 # PREDICTION FUNCTION
 # ==========================================
+# ==========================================
+# PREDICTION FUNCTION
+# ==========================================
 def predict_image(image):
 
     image = image.convert("RGB")
@@ -87,10 +90,20 @@ def predict_image(image):
 
     img_array = np.array(image)
 
-    # JANGAN dibagi 255 karena training tidak pakai rescale
     img_array = np.expand_dims(img_array, axis=0)
 
-    prediction = model.predict(img_array)
+    img_array = img_array.astype(np.float32)
+
+    interpreter.set_tensor(
+        input_details[0]['index'],
+        img_array
+    )
+
+    interpreter.invoke()
+
+    prediction = interpreter.get_tensor(
+        output_details[0]['index']
+    )
 
     predicted_index = np.argmax(prediction)
 
@@ -99,7 +112,6 @@ def predict_image(image):
     confidence = np.max(prediction) * 100
 
     return predicted_class, confidence
-
 # ==========================================
 # TITLE
 # ==========================================
