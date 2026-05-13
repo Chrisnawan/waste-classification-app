@@ -16,13 +16,16 @@ st.set_page_config(
 # ==========================================
 # LOAD MODEL
 # ==========================================
-@st.cache_resource
-def load_model():
-    return tf.keras.models.load_model(
-        "waste_classification_efficientnetb0_final (1).h5"
-    )
+import tflite_runtime.interpreter as tflite
 
-model = load_model()
+interpreter = tflite.Interpreter(
+    model_path="waste_model.tflite"
+)
+
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
 # ==========================================
 # CLASS NAMES
