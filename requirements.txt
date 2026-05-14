@@ -2,5 +2,9 @@ streamlit
 tensorflow
 numpy
 pandas
-pillow
-h5py
+matplotlib
+seaborn
+scikit-learn
+opencv-python-headless
+Pillow
+gdown
